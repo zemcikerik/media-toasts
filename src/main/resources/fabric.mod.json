@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "media-toasts",
+  "version": "${version}",
+  "name": "media-toasts",
+  "description": "",
+  "authors": [
+    "zemco"
+  ],
+  "contact": {
+    "repo": "https://github.com/zemcikerik/media-toasts"
+  },
+  "license": "GPL-3.0",
+  "icon": "assets/media-toasts/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.zemco.mediatoasts.MediaToastsClientMod"
+    ]
+  },
+  "mixins": [
+    "media-toasts.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}"
+  }
+}
