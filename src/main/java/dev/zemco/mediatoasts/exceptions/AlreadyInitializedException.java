@@ -1,5 +1,6 @@
 package dev.zemco.mediatoasts.exceptions;
 
+@SuppressWarnings("unused") // thrown from native code
 public class AlreadyInitializedException extends JniException {
 
     public AlreadyInitializedException() {

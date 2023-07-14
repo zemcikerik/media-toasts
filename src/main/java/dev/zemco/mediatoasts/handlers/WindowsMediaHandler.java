@@ -27,11 +27,6 @@ public class WindowsMediaHandler implements MediaHandler {
         this.mediaInfoListener.onMediaInfo(new MediaInfo(artist, title));
     }
 
-    @SuppressWarnings("unused") // called from native code
-    public void onUnhandledExceptionNativeCallback(Throwable throwable) {
-        throwable.printStackTrace();
-    }
-
     @Override
     public void close() {
         this.dispose();

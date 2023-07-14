@@ -28,7 +28,6 @@ public class MediaToastsClientMod implements ClientModInitializer {
         this.mediaHandler = new WindowsMediaHandler(mediaInfo -> {
             // event may be fired on another thread, schedule work on game thread
             client.execute(() -> this.multicastListener.onMediaInfo(mediaInfo));
-            throw new RuntimeException();
         });
 
         INSTANCE = this;
