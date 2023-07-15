@@ -1,0 +1,72 @@
+name: Build Media Toasts
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build-native-win:
+    name: '[Build] Native - Windows'
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure MSVC console
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: amd64
+          uwp: false
+          spectre: false
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Build
+        run: msbuild ./native/windows/WindowsMediaToasts.sln /property:Configuration=Release
+
+      - name: Upload native dll
+        uses: actions/upload-artifact@v3
+        with:
+          name: native
+          path: ./native/windows/x64/Release/*.dll
+          retention-days: 3
+
+  build-fabric:
+    name: '[Build] Fabric'
+    runs-on: ubuntu-latest
+    needs: [build-native-win]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+          cache: gradle
+
+      - name: Download natives
+        uses: actions/download-artifact@v3
+        with:
+          name: native
+          path: ./src/main/resources/native
+
+      - name: Build
+        shell: bash
+        run: ./gradlew build
+
+      - name: Upload Fabric mod
+        uses: actions/upload-artifact@v3
+        with:
+          name: fabric
+          path: ./build/libs/*.jar
+          retention-days: 7

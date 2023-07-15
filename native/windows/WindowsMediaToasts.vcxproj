@@ -71,16 +71,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ExternalIncludePath>$(JAVA_HOME)include\win32;$(JAVA_HOME)include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(JAVA_HOME)\include\win32;$(JAVA_HOME)\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ExternalIncludePath>$(JAVA_HOME)include\win32;$(JAVA_HOME)include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(JAVA_HOME)\include\win32;$(JAVA_HOME)\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExternalIncludePath>$(JAVA_HOME)include\win32;$(JAVA_HOME)include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(JAVA_HOME)\include\win32;$(JAVA_HOME)\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ExternalIncludePath>$(JAVA_HOME)include\win32;$(JAVA_HOME)include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(JAVA_HOME)\include\win32;$(JAVA_HOME)\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
