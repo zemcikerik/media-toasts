@@ -14,6 +14,7 @@ public class MediaToastsClientMod implements ClientModInitializer {
     private static MediaToastsClientMod INSTANCE;
     private final Logger logger = LogManager.getLogger();
 
+    private PlatformChecker platformChecker;
     private MulticastMediaInfoListener multicastListener;
     private MediaHandler mediaHandler;
 
@@ -22,24 +23,42 @@ public class MediaToastsClientMod implements ClientModInitializer {
         this.logger.info("Initializing!");
         MinecraftClient client = MinecraftClient.getInstance();
 
+        this.platformChecker = new PlatformChecker();
         this.multicastListener = new MulticastMediaInfoListener();
         this.multicastListener.addListener(new ToastMediaInfoListener(client.getToastManager()));
 
-        this.mediaHandler = new WindowsMediaHandler(mediaInfo -> {
-            // event may be fired on another thread, schedule work on game thread
-            client.execute(() -> this.multicastListener.onMediaInfo(mediaInfo));
-        });
+        if (this.platformChecker.isSupportedPlatform()) {
+            this.openMediaHandler(client);
+        } else {
+            this.logger.warn("Unsupported platform detected! Media toasts will be disabled.");
+        }
 
         INSTANCE = this;
     }
 
-    public void onCloseClient() {
+    private void openMediaHandler(MinecraftClient client) {
+        this.mediaHandler = new WindowsMediaHandler(mediaInfo -> {
+            // event may be fired on another thread, schedule work on game thread
+            client.execute(() -> this.multicastListener.onMediaInfo(mediaInfo));
+        });
+    }
+
+    public void closeMediaHandler() {
+        if (this.mediaHandler == null) {
+            return;
+        }
+
         try {
             this.mediaHandler.close();
+            this.mediaHandler = null;
         } catch (IOException e) {
             this.logger.error("Failed to close media handler!", e);
             throw new RuntimeException(e);
         }
+    }
+
+    public PlatformChecker getPlatformChecker() {
+        return this.platformChecker;
     }
 
     public static MediaToastsClientMod getInstance() {
