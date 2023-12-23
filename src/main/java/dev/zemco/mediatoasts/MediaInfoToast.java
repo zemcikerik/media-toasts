@@ -5,10 +5,13 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.toast.Toast;
 import net.minecraft.client.toast.ToastManager;
 import net.minecraft.item.Items;
+import net.minecraft.util.Identifier;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
 public class MediaInfoToast implements Toast {
+
+    private static final Identifier TEXTURE = new Identifier("toast/recipe");
 
     // R: 80, G: 0, B: 80, A: 255 in ARGB format
     private static final int ARTIST_COLOR = -11534256;
@@ -24,7 +27,7 @@ public class MediaInfoToast implements Toast {
 
     @Override
     public Visibility draw(DrawContext context, ToastManager manager, long startTime) {
-        context.drawTexture(TEXTURE, 0, 0, 0, 32, this.getWidth(), this.getHeight());
+        context.drawGuiTexture(TEXTURE, 0, 0, this.getWidth(), this.getHeight());
 
         TextRenderer textRenderer = manager.getClient().textRenderer;
         context.drawText(textRenderer, this.mediaInfo.artist(), 30, 7, ARTIST_COLOR, false);
