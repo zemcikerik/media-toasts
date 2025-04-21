@@ -24,7 +24,7 @@ public class MixinToastManager {
     @Inject(
         method = "method_61991",
         at = @At(
-            value = "RETURN",
+            value = "HEAD",
             target = "Lnet/minecraft/client/toast/ToastManager$Entry;update()V"
         )
     )
@@ -36,6 +36,8 @@ public class MixinToastManager {
         if (entry.getInstance() instanceof MediaInfoToast) {
             this.shouldSuppressSound = true;
             this.soundPlayedFlag = soundPlayedFlag;
+        } else {
+            this.shouldSuppressSound = false;
         }
     }
 
