@@ -2,18 +2,17 @@ package dev.zemco.mediatoasts;
 
 import org.lwjgl.system.Platform;
 
+import java.util.List;
+
 public class PlatformChecker {
 
     public boolean isSupportedPlatform() {
-        return Platform.get() == Platform.WINDOWS && Platform.getArchitecture() == Platform.Architecture.X64;
+        return List.of(Platform.WINDOWS, Platform.LINUX).contains(Platform.get())
+            && Platform.getArchitecture() == Platform.Architecture.X64;
     }
 
-    public String getPlatform() {
-        return Platform.get().getName();
-    }
-
-    public String getArchitecture() {
-        return Platform.getArchitecture().name();
+    public boolean isLinux() {
+        return Platform.get() == Platform.LINUX;
     }
 
 }

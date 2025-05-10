@@ -1,5 +1,6 @@
 package dev.zemco.mediatoasts;
 
+import dev.zemco.mediatoasts.handlers.LinuxMediaHandler;
 import dev.zemco.mediatoasts.handlers.MediaHandler;
 import dev.zemco.mediatoasts.handlers.WindowsMediaHandler;
 import net.fabricmc.api.ClientModInitializer;
@@ -37,10 +38,14 @@ public class MediaToastsClientMod implements ClientModInitializer {
     }
 
     private void openMediaHandler(MinecraftClient client) {
-        this.mediaHandler = new WindowsMediaHandler(mediaInfo -> {
+        MediaInfoListener queueOnMainThreadListener = mediaInfo -> {
             // event may be fired on another thread, schedule work on game thread
             client.execute(() -> this.multicastListener.onMediaInfo(mediaInfo));
-        });
+        };
+
+        this.mediaHandler = this.platformChecker.isLinux()
+            ? new LinuxMediaHandler(queueOnMainThreadListener)
+            : new WindowsMediaHandler(queueOnMainThreadListener);
     }
 
     public void closeMediaHandler() {

@@ -13,7 +13,10 @@ public final class NativeHelpers {
     public static void loadLibraryFromResource(String resourcePath) throws IOException {
         checkArgument(resourcePath != null, "Resource path cannot be null!");
 
-        File file = Files.createTempFile(null, ".dll").toFile();
+        String[] nameParts = resourcePath.split("\\.");
+        String extension = String.format(".%s", nameParts[nameParts.length - 1]);
+
+        File file = Files.createTempFile(null, extension).toFile();
         file.deleteOnExit();
 
         try (InputStream is = NativeHelpers.class.getResourceAsStream(resourcePath)) {
