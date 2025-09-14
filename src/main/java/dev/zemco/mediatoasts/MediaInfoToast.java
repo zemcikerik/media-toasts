@@ -1,8 +1,8 @@
 package dev.zemco.mediatoasts;
 
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.toast.Toast;
 import net.minecraft.client.toast.ToastManager;
 import net.minecraft.item.Items;
@@ -45,7 +45,7 @@ public class MediaInfoToast implements Toast {
 
     @Override
     public void draw(DrawContext context, TextRenderer textRenderer, long startTime) {
-        context.drawGuiTexture(RenderLayer::getGuiTextured, TEXTURE, 0, 0, this.getWidth(), this.getHeight());
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, 0, 0, this.getWidth(), this.getHeight());
         context.drawText(textRenderer, this.mediaInfo.artist(), 30, 7, ARTIST_COLOR, false);
         context.drawText(textRenderer, this.mediaInfo.title(), 30, 18, TITLE_COLOR, false);
         context.drawItem(Items.JUKEBOX.getDefaultStack(), 8, 8);
