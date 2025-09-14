@@ -25,7 +25,7 @@ public class MediaToastsClientMod implements ClientModInitializer {
 
         this.platformChecker = new PlatformChecker();
         this.multicastListener = new MulticastMediaInfoListener();
-        this.multicastListener.addListener(new ToastMediaInfoListener(client.getToastManager()));
+        this.multicastListener.addListener(new ToastMediaInfoListener(client));
 
         if (this.platformChecker.isSupportedPlatform()) {
             this.openMediaHandler(client);
